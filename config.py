@@ -10,11 +10,7 @@ def main():
     system('sudo curl -L "https://github.com/docker/compose/releases/download/1.25.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose')
     system('sudo chmod +x /usr/local/bin/docker-compose')
     system('sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose')
-    system('cd ~')
-    system('git config --global user.name douglasJovenil')
-    system('git config --global user.email douglascastilhos@yahoo.com.br')
-    system('git clone https://github.com/douglasJovenil/dst_server')
-    system('cd dst_server')
+    system('cd ~/dst_server')
     system('sudo docker-compose up -d')
     # system('docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD:$PWD" -w="$PWD" docker/compose:1.24.0 up -d')
 
