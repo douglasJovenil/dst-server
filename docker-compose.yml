@@ -3,7 +3,7 @@ services:
   overworld:
     # image: overworld
     build:
-      context: dstacademy/dontstarvetogether:0.8
+      image: dstacademy/dontstarvetogether:0.8
       args:
         MODS: 1207269058,478005098,378160973,374550642,501385076
     container_name: overworld
@@ -136,7 +136,7 @@ services:
   underworld:
     # image: underworld
     build:
-      context: dstacademy/dontstarvetogether:0.8
+      image: dstacademy/dontstarvetogether:0.8
       args:
         MODS: 1207269058,478005098,378160973,374550642,501385076
     container_name: underworld
