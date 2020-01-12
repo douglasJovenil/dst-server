@@ -10,7 +10,8 @@ services:
     hostname: overworld
     tty: true
     stdin_open: true
-    command: dst-server start --update=all
+    # command: dst-server start --update=all
+    command: dst-server start
     env_file: overworld.env
     environment:
       # Defined in YAML because multi-line support, but this can also be injected other ways
@@ -143,7 +144,8 @@ services:
     hostname: underworld
     tty: true
     stdin_open: true
-    command: dst-server start --update=all
+    # command: dst-server start --update=all
+    command: dst-server start
     env_file: underworld.env
     environment:
       # Defined in YAML because multi-line support, but this can also be injected other ways
