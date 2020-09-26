@@ -26,7 +26,7 @@ def main():
 
   if (args.install):
     bashrc_path = f'{expanduser("~")}/.bashrc'
-    alias_to_add = f'\nalias dst="python3.8 {root_path}/src/main.py"'
+    alias_to_add = f'alias dst="python3.8 {root_path}/src/main.py"'
 
     # system('sudo apt-get update -y')
     # system('sudo apt-get upgrade -y')
@@ -52,7 +52,7 @@ def main():
     if (not alias_to_add in bashrc):
       print('Adding alias')
       with open(bashrc_path, 'w') as f:
-        f.write(bashrc + alias_to_add)
+        f.write(bashrc.append(alias_to_add))
       system('reset')
 
     print('Success configuring server')
