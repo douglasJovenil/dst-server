@@ -73,7 +73,7 @@ def main():
     
     for image in images:
       print(image)
-      system(f'sudo docker rmi {image}')  
+      system(f'sudo docker rmi {image} -f')  
 
     system(f'sudo rm {root_path}/container/underworld -rf')
     system(f'sudo rm {root_path}/container/overworld -rf')
