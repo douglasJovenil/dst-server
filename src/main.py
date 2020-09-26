@@ -37,7 +37,7 @@ def main():
 
   if (args.start):
     chdir(f'{root_path}/container')
-    system('docker-compose up -d')
+    system('sudo docker-compose up -d')
 
 if __name__ == '__main__':
   main()
