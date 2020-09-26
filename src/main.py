@@ -6,7 +6,7 @@ import argparse
 
 
 def main():
-  root_path = environ['DST_CLI_PATH'] if 'DST_CLI_PATH' in environ.keys() else __file__.split('/src')[0]
+  root_path = environ['DST_CLI_PATH'] if 'DST_CLI_PATH' in environ.keys() else f'{getcwd()}/{__file__}'.split('/src')[0]
 
   parser = argparse.ArgumentParser('Ferramenta para auxiliar na comunicação com o Raspberry')
   parser.add_argument('--install', help='Configure the container', action='store_true')
