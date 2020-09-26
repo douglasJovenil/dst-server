@@ -1,8 +1,9 @@
 from os import system, getcwd, chdir, popen
-import argparse
-from sys import argv
-from shutil import rmtree
 from os.path import expanduser
+from shutil import rmtree
+from sys import argv
+import argparse
+
 
 def main():
   root_path = f'{getcwd()}/{__file__}'.split('src')[0]
@@ -16,7 +17,8 @@ def main():
   parser.add_argument('--delete', help='Delete the server', action='store_true')
   parser.add_argument('--overworld', help='Open the overworld container', action='store_true')
   parser.add_argument('--underworld', help='Open the underworld container', action='store_true')
-  parser.add_argument('--list', help='List all containers', action='store_true')
+  parser.add_argument('--containers', help='List all containers', action='store_true')
+  parser.add_argument('--images', help='List all images', action='store_true')
 
   args = parser.parse_args()
 
@@ -70,7 +72,6 @@ def main():
     images = set(getImages())
 
     system('sudo docker system prune')
-
     
     for image in images:
       print(image)
@@ -87,8 +88,11 @@ def main():
     underworld = getContainers()[1]
     system(f'sudo docker exec -it {underworld} /bin/bash')
 
-  if (args.list):
+  if (args.containers):
     system('sudo docker ps')
+
+  if (args.images):
+    system('sudo docker images')
 
 def getContainers():
   return popen('sudo docker ps -q').read().split('\n')[:-1]
