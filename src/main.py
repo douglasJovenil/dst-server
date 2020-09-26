@@ -52,7 +52,8 @@ def main():
     if (not alias_to_add in bashrc):
       print('Adding alias')
       with open(bashrc_path, 'w') as f:
-        f.write(bashrc.append(alias_to_add))
+        bashrc = bashrc.append(alias_to_add) 
+        f.write(bashrc)
       system('reset')
 
     print('Success configuring server')
