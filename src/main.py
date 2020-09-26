@@ -26,25 +26,25 @@ def main():
 
   if (args.install):
     bashrc_path = f'{expanduser("~")}/.bashrc'
-    alias_to_bashrc = f'alias dst="python3.8 {root_path}/src/main.py"'
+    alias_to_bashrc = f'\nalias dst="python3.8 {root_path}/src/main.py"'
 
-    system('sudo apt-get update -y')
-    system('sudo apt-get upgrade -y')
-    system('sudo apt-get autoremove -y')
+    # system('sudo apt-get update -y')
+    # system('sudo apt-get upgrade -y')
+    # system('sudo apt-get autoremove -y')
 
-    system('sudo apt-get screen install docker.io apt-transport-https ca-certificates curl gnupg2 software-properties-common -y')
-    system('curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -')
-    system('sudo apt-key fingerprint 0EBFCD88')
-    system('sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"')
-    system('sudo apt-get update -y')
-    system('sudo apt-get install docker-ce docker-ce-cli containerd.io -y')
+    # system('sudo apt-get screen install docker.io apt-transport-https ca-certificates curl gnupg2 software-properties-common -y')
+    # system('curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -')
+    # system('sudo apt-key fingerprint 0EBFCD88')
+    # system('sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"')
+    # system('sudo apt-get update -y')
+    # system('sudo apt-get install docker-ce docker-ce-cli containerd.io -y')
 
-    system('sudo curl -L "https://github.com/docker/compose/releases/download/1.25.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose')
-    system('sudo chmod +x /usr/local/bin/docker-compose')
-    system('sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose')
+    # system('sudo curl -L "https://github.com/docker/compose/releases/download/1.25.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose')
+    # system('sudo chmod +x /usr/local/bin/docker-compose')
+    # system('sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose')
 
-    chdir(f'{root_path}/container')
-    system('sudo docker-compose build')
+    # chdir(f'{root_path}/container')
+    # system('sudo docker-compose build')
 
     with open(bashrc_path, 'r') as f: 
       bashrc = f.readlines()
@@ -52,7 +52,7 @@ def main():
     if (not alias_to_bashrc in bashrc):
       print('Adding alias')
       with open(bashrc_path, 'w') as f:
-        f.write(bashrc_path.append(alias_to_bashrc))
+        f.write(bashrc_path + alias_to_bashrc)
       system('. /bin/bash')
 
     print('Success configuring server')
