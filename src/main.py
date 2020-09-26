@@ -52,7 +52,7 @@ def main():
     if (not alias_to_add in bashrc):
       print('Adding alias')
       with open(bashrc_path, 'w') as f:
-        bashrc = bashrc.append(alias_to_add) 
+        bashrc.append(alias_to_add) 
         f.write(bashrc)
       system('reset')
 
