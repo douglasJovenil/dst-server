@@ -10,9 +10,7 @@ def main():
 
   args = parser.parse_args()
 
-  print(root_path)
-
-  if (not len(args._get_args())):
+  if ((not args.install) and (not args.start)):
     parser.print_help()
     exit(0)
 
