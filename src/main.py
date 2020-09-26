@@ -47,13 +47,12 @@ def main():
     # system('sudo docker-compose build')
 
     with open(bashrc_path, 'r') as f: 
-      bashrc = f.readlines()
+      bashrc = f.read()
     
     if (not alias_to_add in bashrc):
       print('Adding alias')
       with open(bashrc_path, 'w') as f:
-        bashrc.append(alias_to_add) 
-        f.write(bashrc)
+        f.write(bashrc + alias_to_add)
       system('reset')
 
     print('Success configuring server')
