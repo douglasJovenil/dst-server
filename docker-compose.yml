@@ -6,7 +6,7 @@ services:
       context: https://github.com/dst-academy/docker-dontstarvetogether.git#v0.8.0:build
       args:
         MODS: 1207269058,478005098,378160973,374550642,501385076,661253977,569043634,1862534310
-    container_name: overworld
+    container_name: overworld_teste
     hostname: overworld
     tty: true
     stdin_open: true
@@ -143,7 +143,7 @@ services:
       context: https://github.com/dst-academy/docker-dontstarvetogether.git#v0.8.0:build
       args:
         MODS: 1207269058,478005098,378160973,374550642,501385076,661253977,569043634,1862534310
-    container_name: underworld
+    container_name: underworld_teste
     hostname: underworld
     tty: true
     stdin_open: true
