@@ -16,8 +16,6 @@ def main():
     parser.print_help()
     exit(0)
 
-  if ((not args.install) and (not args.start) and (not args.stop)):
-
   if (args.install):
     system('sudo apt-get update -y')
     system('sudo apt-get upgrade -y')
