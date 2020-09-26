@@ -9,6 +9,10 @@ def main():
   parser.add_argument('--install', help='Configure the container', action='store_true')
   parser.add_argument('--start', help='Start the server', action='store_true')
   parser.add_argument('--stop', help='Stop the server', action='store_true')
+  parser.add_argument('--delete', help='Delete the server', action='store_true')
+  parser.add_argument('--overworld', help='Open the overworld container', action='store_true')
+  parser.add_argument('--underworld', help='Open the underworld container', action='store_true')
+
 
   args = parser.parse_args()
 
@@ -42,10 +46,23 @@ def main():
     system('sudo docker-compose up -d')
 
   if (args.stop):
-    containers = popen('sudo docker ps -q').read().split('\n')[:-1]
+    containers = getContainers()
     for container in containers:
       system(f'sudo docker stop {container}')
+  
+  if (args.delete):
+    system('sudo docker system prune')
+  
+  if (args.overworld):
+    overworld = getContainers()[0]
+    system(f'sudo docker exec -it {} /bin/bash')
 
+  if (args.overworld):
+    underworld = getContainers()[1]
+    system(f'sudo docker exec -it {underworld} /bin/bash')
+
+def getContainers():
+  return popen('sudo docker ps -q').read().split('\n')[:-1]
 
 if __name__ == '__main__':
   main()
