@@ -1,6 +1,7 @@
 from os import system, getcwd, chdir, popen
 import argparse
 from sys import argv
+from shutil import rmtree
 
 
 def main():
@@ -50,6 +51,8 @@ def main():
   
   if (args.delete):
     system('sudo docker system prune')
+    rmtree(f'{root_path}/container/underworld')
+    rmtree(f'{root_path}/container/overworld')
   
   if (args.overworld):
     overworld = getContainers()[0]
