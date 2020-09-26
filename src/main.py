@@ -6,7 +6,7 @@ import argparse
 
 
 def main():
-  root_path = f'{getcwd()}/{__file__}'.split('src')[0]
+  root_path = __file__.split('/src')[0]
 
   parser = argparse.ArgumentParser('Ferramenta para auxiliar na comunicação com o Raspberry')
   parser.add_argument('--install', help='Configure the container', action='store_true')
@@ -82,7 +82,7 @@ def main():
     overworld = getContainers()[0]
     system(f'sudo docker exec -it {overworld} /bin/bash')
 
-  if (args.overworld):
+  if (args.underworld):
     underworld = getContainers()[1]
     system(f'sudo docker exec -it {underworld} /bin/bash')
 
