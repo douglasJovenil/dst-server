@@ -2,6 +2,7 @@ from os import system, getcwd, chdir, popen
 import argparse
 from sys import argv
 
+
 def main():
   root_path = f'{getcwd()}/{__file__}'.split('src')[0]
 
@@ -12,7 +13,6 @@ def main():
   parser.add_argument('--delete', help='Delete the server', action='store_true')
   parser.add_argument('--overworld', help='Open the overworld container', action='store_true')
   parser.add_argument('--underworld', help='Open the underworld container', action='store_true')
-
 
   args = parser.parse_args()
 
@@ -36,9 +36,6 @@ def main():
     system('sudo chmod +x /usr/local/bin/docker-compose')
     system('sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose')
 
-    chdir(f'{root_path}/src')
-    system('chmod a+x ./start.sh')
-
     print('Success configuring server')
 
   if (args.start):
@@ -55,7 +52,7 @@ def main():
   
   if (args.overworld):
     overworld = getContainers()[0]
-    system(f'sudo docker exec -it {} /bin/bash')
+    system(f'sudo docker exec -it {overworld} /bin/bash')
 
   if (args.overworld):
     underworld = getContainers()[1]
@@ -63,6 +60,7 @@ def main():
 
 def getContainers():
   return popen('sudo docker ps -q').read().split('\n')[:-1]
+
 
 if __name__ == '__main__':
   main()
