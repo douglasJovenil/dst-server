@@ -26,8 +26,8 @@ def main():
 
   if (args.install):
     bashrc_path = f'{expanduser("~")}/.bashrc'
-    alias_to_add = f'alias dst="python3.8 {root_path}/src/main.py"\n'
-    env_var_to_add = f'export DST_CLI_PATH={root_path}\n'
+    alias_to_add = f'\nalias dst="python3.8 {root_path}/src/main.py"\n'
+    env_var_to_add = f'\nexport DST_CLI_PATH={root_path}\n'
 
     system('sudo apt-get update -y')
     system('sudo apt-get upgrade -y')
