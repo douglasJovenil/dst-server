@@ -4,6 +4,8 @@ This repository provides scripts to build a docker server based on [docker-donts
 
 sudo docker exec -it 34cd8fa6467d /bin/bash
 sudo docker exec -it CONTAINER_ID /bin/bash
+sudo docker stop CONTAINER_ID
+sudo docker ps
 
 ## ☁️ Links
 

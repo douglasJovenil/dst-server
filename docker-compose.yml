@@ -134,7 +134,7 @@ services:
           version=4
         }
     ports:
-      - "10998:10998/udp"
+      - "10999:10999/udp"
     volumes:
       - ./overworld:/var/lib/dsta/cluster
   underworld:
@@ -217,7 +217,7 @@ services:
           version=4 
         }
     ports:
-      - "11001:11001/udp"
+      - "11000:11000/udp"
     links:
       - overworld
     volumes:
