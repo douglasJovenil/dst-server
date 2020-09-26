@@ -2,10 +2,12 @@ from os import system, getcwd, chdir, popen
 import argparse
 from sys import argv
 from shutil import rmtree
-
+from os.path import expanduser
 
 def main():
   root_path = f'{getcwd()}/{__file__}'.split('src')[0]
+
+  with open('', '') as f: f.read
 
   parser = argparse.ArgumentParser('Ferramenta para auxiliar na comunicação com o Raspberry')
   parser.add_argument('--install', help='Configure the container', action='store_true')
@@ -23,6 +25,9 @@ def main():
     exit(0)
 
   if (args.install):
+    bashrc_path = f'{expanduser("~")}/.bashrc'
+    alias_to_bashrc = 'alias dst="python3.8 {root_path}/src/main.py"'
+
     system('sudo apt-get update -y')
     system('sudo apt-get upgrade -y')
     system('sudo apt-get autoremove -y')
@@ -40,6 +45,15 @@ def main():
 
     chdir(f'{root_path}/container')
     system('sudo docker-compose build')
+
+    with open(bashrc_path, 'r') as f: 
+      bashrc = f.readlines()
+    
+    if (not alias_to_bashrc in bashrc):
+      print('Adding alias')
+      with open(bashrc_path, 'w') as f:
+        f.write(bashrc_path.append(alias_to_bashrc))
+      system('. /bin/bash')
 
     print('Success configuring server')
 
