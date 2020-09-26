@@ -38,6 +38,9 @@ def main():
     system('sudo chmod +x /usr/local/bin/docker-compose')
     system('sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose')
 
+    chdir(f'{root_path}/container')
+    system('sudo docker-compose build')
+
     print('Success configuring server')
 
   if (args.start):
@@ -50,7 +53,13 @@ def main():
       system(f'sudo docker stop {container}')
   
   if (args.delete):
+    images = set(getImages())
+
     system('sudo docker system prune')
+
+    for image in images:
+      system(f'sudo docker rmi {image}')  
+
     system(f'sudo rm {root_path}/container/underworld -rf')
     system(f'sudo rm {root_path}/container/overworld -rf')
   
@@ -67,6 +76,9 @@ def main():
 
 def getContainers():
   return popen('sudo docker ps -q').read().split('\n')[:-1]
+
+def getImages():
+  return popen('sudo images -q').read().split('\n')[:-1]
 
 
 if __name__ == '__main__':
