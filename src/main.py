@@ -53,7 +53,7 @@ def main():
       print('Adding alias')
       with open(bashrc_path, 'w') as f:
         f.write(bashrc_path + alias_to_bashrc)
-      system('. /bin/bash')
+      system('reset')
 
     print('Success configuring server')
 
