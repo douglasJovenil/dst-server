@@ -1,5 +1,6 @@
-from os import system, getcwd, chdir
+from os import system, getcwd, chdir, popen
 import argparse
+from sys import argv
 
 def main():
   root_path = f'{getcwd()}/{__file__}'.split('src')[0]
@@ -7,12 +8,15 @@ def main():
   parser = argparse.ArgumentParser('Ferramenta para auxiliar na comunicação com o Raspberry')
   parser.add_argument('--install', help='Configure the container', action='store_true')
   parser.add_argument('--start', help='Start the server', action='store_true')
+  parser.add_argument('--stop', help='Stop the server', action='store_true')
 
   args = parser.parse_args()
 
-  if ((not args.install) and (not args.start)):
+  if (len(argv) <= 1):
     parser.print_help()
     exit(0)
+
+  if ((not args.install) and (not args.start) and (not args.stop)):
 
   if (args.install):
     system('sudo apt-get update -y')
@@ -38,6 +42,12 @@ def main():
   if (args.start):
     chdir(f'{root_path}/container')
     system('sudo docker-compose up -d')
+
+  if (args.stop):
+    containers = popen('sudo docker ps -q').read().split('\n')[:-1]
+    for container in containers:
+      system(f'sudo docker stop {container}')
+
 
 if __name__ == '__main__':
   main()
