@@ -26,7 +26,7 @@ def main():
 
   if (args.install):
     bashrc_path = f'{expanduser("~")}/.bashrc'
-    alias_to_bashrc = 'alias dst="python3.8 {root_path}/src/main.py"'
+    alias_to_bashrc = f'alias dst="python3.8 {root_path}/src/main.py"'
 
     system('sudo apt-get update -y')
     system('sudo apt-get upgrade -y')
