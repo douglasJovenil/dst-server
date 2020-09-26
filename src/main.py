@@ -80,7 +80,7 @@ def getContainers():
   return popen('sudo docker ps -q').read().split('\n')[:-1]
 
 def getImages():
-  return popen('sudo images -q').read().split('\n')[:-1]
+  return popen('sudo docker images -q').read().split('\n')[:-1]
 
 
 if __name__ == '__main__':
