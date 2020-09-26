@@ -68,5 +68,7 @@ This project was developed with the following technologies:
 ## 🏃 Usage
 
 ```bash
-$ sudo python main.py
+$ sudo python3.8 main.py --install
+$ exec bash
+$ dst --install
 ```

@@ -1,4 +1,4 @@
-from os import system, getcwd, chdir, popen
+from os import system, getcwd, chdir, popen, environ
 from os.path import expanduser
 from shutil import rmtree
 from sys import argv
@@ -6,7 +6,7 @@ import argparse
 
 
 def main():
-  root_path = __file__.split('/src')[0]
+  root_path = environ['DST_CLI_PATH'] if environ['DST_CLI_PATH'] else __file__.split('/src')[0]
 
   parser = argparse.ArgumentParser('Ferramenta para auxiliar na comunicação com o Raspberry')
   parser.add_argument('--install', help='Configure the container', action='store_true')
@@ -27,6 +27,7 @@ def main():
   if (args.install):
     bashrc_path = f'{expanduser("~")}/.bashrc'
     alias_to_add = f'alias dst="python3.8 {root_path}/src/main.py"'
+    env_var_to_add = f'export DST_CLI_PATH={root_path}'
 
     system('sudo apt-get update -y')
     system('sudo apt-get upgrade -y')
@@ -52,7 +53,7 @@ def main():
     if (not alias_to_add in bashrc):
       print('Adding alias')
       with open(bashrc_path, 'w') as f:
-        f.write(bashrc + alias_to_add)
+        f.write(bashrc + env_var_to_add + alias_to_add)
       system(f'exec bash')
 
     print('Success configuring server')
