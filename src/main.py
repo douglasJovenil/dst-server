@@ -57,7 +57,9 @@ def main():
 
     system('sudo docker system prune')
 
+    
     for image in images:
+      print(image)
       system(f'sudo docker rmi {image}')  
 
     system(f'sudo rm {root_path}/container/underworld -rf')
