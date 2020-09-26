@@ -51,8 +51,8 @@ def main():
   
   if (args.delete):
     system('sudo docker system prune')
-    rmtree(f'{root_path}/container/underworld')
-    rmtree(f'{root_path}/container/overworld')
+    system(f'sudo rm {root_path}/container/underworld -rf')
+    system(f'sudo rm {root_path}/container/overworld -rf')
   
   if (args.overworld):
     overworld = getContainers()[0]
