@@ -1,13 +1,7 @@
 # Don't Starve Together Server
 
 This repository provides scripts to build a docker server based on [docker-dontstarvetogether](https://github.com/fairplay-zone/docker-dontstarvetogether).
-
-sudo docker exec -it 34cd8fa6467d /bin/bash
-sudo docker exec -it CONTAINER_ID /bin/bash
-sudo docker stop CONTAINER_ID
-sudo docker ps
-
-
+<!-- 
 ## ☁️ Links
 
 - [Live preview](https://feracode-frontend.herokuapp.com)
@@ -63,7 +57,7 @@ This project was developed with the following technologies:
 
 <img align="left" alt="WebRTC" width="26px" src="https://i.imgur.com/9C5ScMM.png" > WebRTC
 
-<img align="left" alt="SocketIO" width="26px" src="https://upload.wikimedia.org/wikipedia/commons/9/96/Socket-io.svg" /> SocketIO
+<img align="left" alt="SocketIO" width="26px" src="https://upload.wikimedia.org/wikipedia/commons/9/96/Socket-io.svg" /> SocketIO -->
 
 ## 🏃 Usage
 
