@@ -13,6 +13,7 @@ def main():
   parser.add_argument('--delete', help='Delete the server', action='store_true')
   parser.add_argument('--overworld', help='Open the overworld container', action='store_true')
   parser.add_argument('--underworld', help='Open the underworld container', action='store_true')
+  parser.add_argument('--list', help='List all containers', action='store_true')
 
   args = parser.parse_args()
 
@@ -57,6 +58,9 @@ def main():
   if (args.overworld):
     underworld = getContainers()[1]
     system(f'sudo docker exec -it {underworld} /bin/bash')
+
+  if (args.list):
+    system('sudo docker ps')
 
 def getContainers():
   return popen('sudo docker ps -q').read().split('\n')[:-1]
