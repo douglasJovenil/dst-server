@@ -44,6 +44,11 @@ A text input field will appear, put any name you want to identify your server, i
 Your server will be added and now you get access to your **TOKEN**
 ![Klei new server added](./docs/images/06_klei_new_server_added.png)
 
+Clone this repository with:
+```bash
+$ git clone https://github.com/douglasJovenil/dst-server
+```
+
 Open the files [underworld](./container/underworld.env) and [overworld](./container/overworld.env), copy the generated **TOKEN** and past it on field **TOKEN** on both files, as follows:
 
 ![Saving token on overworld](./docs/images/07_saving_token_on_overworld.png)
@@ -116,9 +121,10 @@ Inside the folder open the file modinfo.lua
 This file have all options of mod, just look what you want to modify and put this modifications on file [modoverrides.lua](./container/modoverrides.lua)
 ![Modinfo](./docs/images/21_modinfo.png)
 
-## Installing CLI
+## Installing CLI and Building Server
 
 ```bash
+$ cd src
 $ sudo python main.py --install
 $ exec bash
 $ dst --install
