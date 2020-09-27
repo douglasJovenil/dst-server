@@ -1,6 +1,6 @@
 # Don't Starve Together Server
 
-This repository provides scripts to build a docker server based on [docker-dontstarvetogether](https://github.com/fairplay-zone/docker-dontstarvetogether).
+This repository provides a CLI to build and manage a docker server based on [docker-dontstarvetogether](https://github.com/fairplay-zone/docker-dontstarvetogether).
 <!-- 
 ## ☁️ Links
 

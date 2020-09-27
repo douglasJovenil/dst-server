@@ -8,7 +8,7 @@ import argparse
 def main():
   root_path = environ['DST_CLI_PATH'] if 'DST_CLI_PATH' in environ.keys() else f'{getcwd()}/{__file__}'.split('/src')[0]
 
-  parser = argparse.ArgumentParser('Ferramenta para auxiliar na comunicação com o Raspberry')
+  parser = argparse.ArgumentParser('CLI to manage the DST server')
   parser.add_argument('--install', help='Configure the container', action='store_true')
   parser.add_argument('--start', help='Start the server', action='store_true')
   parser.add_argument('--stop', help='Stop the server', action='store_true')
