@@ -1,7 +1,6 @@
 version: "2"
 services:
   overworld:
-    # image: overworld
     build:
       context: https://github.com/dst-academy/docker-dontstarvetogether.git#v0.8.0:build
       args:
@@ -138,7 +137,6 @@ services:
     volumes:
       - ./overworld:/var/lib/dsta/cluster
   underworld:
-    # image: underworld
     build:
       context: https://github.com/dst-academy/docker-dontstarvetogether.git#v0.8.0:build
       args:
