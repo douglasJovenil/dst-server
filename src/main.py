@@ -63,9 +63,11 @@ def main():
     system('sudo docker-compose up -d')
 
   if (args.stop):
-    containers = getContainers()
-    for container in containers:
-      system(f'sudo docker stop {container}')
+    chdir(f'{root_path}/container')
+    system('sudo docker-compose down')
+    # containers = getContainers()
+    # for container in containers:
+    #   system(f'sudo docker stop {container}')
   
   if (args.delete):
     images = set(getImages())
