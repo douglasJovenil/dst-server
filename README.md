@@ -45,6 +45,7 @@ Your server will be added and now you get access to your **TOKEN**
 ![Klei new server added](./docs/images/06_klei_new_server_added.png)
 
 Clone this repository with:
+
 ```bash
 $ git clone https://github.com/douglasJovenil/dst-server
 ```
@@ -64,6 +65,24 @@ Besides that you can change other fields, like:
 - **INTENTION**: can be `social`, `cooperative`, `competitive` or `madness`
 
 Leave the rest of the fields with the default values. To **add more configurations** check out this [documentation page](https://github.com/fairplay-zone/docker-dontstarvetogether/blob/develop/docs/configuration.md) for the available options.
+
+Now you have to configure the options of your world, the easiest wat to do it is create a **local** world as you like:
+
+![Setup world](./docs/images/22_setup_world.png)
+
+Then open the data files of this world:
+
+![Open data](./docs/images/23_open_data.png)
+
+Navigate to **WOLRD_ID/Cluster_1/Master** and find **leveldataoverride.lua**, this file contain all configuration of your overworld, just open it, copy all content and past it on [docker-compose.yml](container/docker-compose.yml), just have shore to put it on field **LEVELDATA_OVERRIDES** relative to overworld.
+
+![Setup overworld](./docs/images/24_copy_and_paste_overworld.png)
+
+You have to do the same thing to underworld, so navigate to **WOLRD_ID/Cluster_1/Caves** and do the same process:
+
+![Setup underworld](./docs/images/25_copy_and_paste_underworld.png)
+
+With all done, you can jump to [Installing CLI and Building Server](#installing-cli-and-building-server) if you want a vanilla server.
 
 ## Adding mods
 
@@ -124,10 +143,12 @@ This file have all mod options, just search for what you want to modify and put 
 ## Installing CLI and Building Server
 
 ```bash
-$ cd src
-$ sudo python main.py --install
+$ sudo add-apt-repository ppa:deadsnakes/ppa -y
+$ sudo apt-get update -y
+$ sudo apt-get install python3.8 -y
+$ cd dst-server/src
+$ sudo python3.8 main.py --install
 $ exec bash
-$ dst --install
 ```
 
 ## Running Server
