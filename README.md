@@ -1,169 +1,181 @@
-# Don't Starve Together Server
+# Don't Starve Together - Dedicated Server
 
-This repository provides a CLI to build and manage a Don't Starve Together server based on [docker-dontstarvetogether](https://github.com/fairplay-zone/docker-dontstarvetogether) container.
+[![Automated Docker Builds](https://img.shields.io/docker/automated/mathielo/dst-dedicated-server.svg)](https://cloud.docker.com/repository/docker/mathielo/dst-dedicated-server)
+[![Docker Build State](https://img.shields.io/docker/build/mathielo/dst-dedicated-server.svg)](https://cloud.docker.com/repository/docker/mathielo/dst-dedicated-server)
+[![Docker Image Pulls](https://img.shields.io/docker/pulls/mathielo/dst-dedicated-server.svg)](https://cloud.docker.com/repository/docker/mathielo/dst-dedicated-server)
+[![License: MIT]( https://img.shields.io/github/license/mathielo/dst-dedicated-server.svg)](https://github.com/mathielo/dst-dedicated-server/blob/master/LICENSE.md)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-round)](http://makeapullrequest.com)
 
-## 💻 Project
+DST Dedicated Server Guide for all platforms (Linux, Mac, Windows) with Docker.
 
-#### CLI
+The purpose of this project is to have DST servers up and running with the **bare minimum** necessary setup.
 
-![CLI](./docs/images/00_cli.png)
+## README in other languages
 
-## 🚀 Technologies
+* [README in Chinese](README.zh_CN.md)
 
-This project was developed with the following technologies:
+## Installation
 
-<img align="left" alt="Python" width="26px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/python/python.png" /> Python3.7+
+Any OS that [supports Docker](https://docs.docker.com/engine/installation/#supported-platforms) can run the dedicated server.
 
-<img align="left" alt="Docker" width="26px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/docker/docker.png" /> Docker
+>:bulb: Linux is the _recommended_ OS to host the containers for better performance gains
 
-<img align="left" alt="Docker-compose" width="26px" src="https://cdn.rancher.com/wp-content/uploads/2016/04/20182217/compose.png"/> Docker Compose
+This project was deployed and tested using **Debian 9**. Instructions will be focused on Linux - but it should be easy to adapt to any other OS.
 
-## 🏃 Usage
+### Installation Overview
 
-Before installing you need to configure your world
+#### Essentials
 
-### Setting World
+These are the minimum required steps to have a server running:
 
-First thing you need to get is your server **TOKEN**, just follow the steps below:
+* Prepare the host
+  * [Install Git](#prepare-the-host)
+  * [Install Docker](#install-docker)
+* Setup the server
+  * [Server files](#prepare-the-dedicated-server) (clone this repository)
+  * [Generate `cluster_token.txt`](#generate-cluster_tokentxt)
+* [Manage the server](docs/ManagingTheServer.md) (how to start, save and stop)
+* [Basic settings setup](#the-server) (server name, password, etc.)
 
-Open DST, and click **Account** on the initial menu
-![Klei page](./docs/images/01_dst_pagina_inicial.png)
+#### Optionals
 
-A klei page will open, then click on **games**
-![Klei account](./docs/images/02_klei_conta.png)
+Enhance your server by customizing it to your liking!
 
-Click on **Game Servers**
-![Klei game servers](./docs/images/03_klei_game_servers.png)
+* Customize your server
+  * [Tweak server settings](#the-server) (game mode, max players, Steam Group, description, etc.)
+  * [World Settings](#the-world) (World Size, Seasons, Difficulty, etc)
+  * [Install Mods](DSTClusterConfig/mods)
+  * [Set Admins, Bans and Whitelisted Players](docs/AdminBanWhitelist.md)
+* How to optimize your [DST Server Performance](docs/ServerPerformance.md)
 
-This page will show all your servers, to add a new one just click on **ADD NEW SERVER**
-![Klei add new server](./docs/images/04_klei_add_new_server.png)
+---
 
-A text input field will appear, put any name you want to identify your server, in this case I choose **NAME OF MY CLUSTER**, then click on **ADD NEW SERVER**
-![Klei adding new](./docs/images/05_klei_adding_new_server.png)
+# Prepare the Host
 
-Your server will be added and now you get access to your **TOKEN**
-![Klei new server added](./docs/images/06_klei_new_server_added.png)
+Read about [server performance](./docs/ServerPerformance.md) for useful tips to make the best use of your resources! That might also help you to [pick a host](./ServerPerformance.md#picking-a-host) machine if you're unsure about it.
 
-Clone this repository with:
+## Install Git
 
-```bash
-$ git clone https://github.com/douglasJovenil/dst-server
-```
+    sudo apt-get install git
 
-Open the files [underworld](./container/underworld.env) and [overworld](./container/overworld.env), and paste your **TOKEN** on both files, as follows:
+## Install Docker
 
-![Saving token on overworld](./docs/images/07_saving_token_on_overworld.png)
+### Linux
 
-![Saving token on underworld](./docs/images/08_saving_token_on_underworld.png)
+Follow the official docs to install Docker on Linux. At first glance it might seem complicated, but the instructions are very detailed and thorough:
 
-Besides that you can change other fields, like:
+> :cop: Make sure you have your own [_sudoer user_](https://www.digitalocean.com/community/tutorials/how-to-create-a-sudo-user-on-ubuntu-quickstart) and perform all the steps logged as it. Running everything as `root` user will probably render you permissions issues down the road.
 
-- **NAME**: this is the name that will appear on the server list inside the DST
-- **DESCRIPTION**: your server's description
-- **GAME_MODE**: can be `survival`, `wilderness` or `endless`
-- **PAUSE_WHEN_EMPTY**: when set to `true` the world will stop if there's no one on server. You can set it to `false` if you like to let days running.
-- **INTENTION**: can be `social`, `cooperative`, `competitive` or `madness`
+* [Docker Engine CE](https://docs.docker.com/engine/installation/linux/docker-ce/debian/#set-up-the-repository)
+* [Docker Compose](https://docs.docker.com/compose/install/#install-compose)
+* **IMPORTANT:** Read through and follow the :point_right: [post-installation steps for Linux](https://docs.docker.com/engine/installation/linux/linux-postinstall/) :point_left:
+  * Enable your user to manage `docker` without the need of `sudo`
+  * Configure Docker to start on boot
 
-Leave the rest of the fields with the default values. To **add more configurations** check out this [documentation page](https://github.com/fairplay-zone/docker-dontstarvetogether/blob/develop/docs/configuration.md) for the available options.
+### Mac OS / Windows
 
-Now you have to configure the options of your world, the easiest wat to do it is create a **local** world as you like:
+You only need the [Docker desktop standalone](https://docs.docker.com/engine/installation/#desktop) as it has everything you need, no extra steps required.
 
-![Setup world](./docs/images/22_setup_world.png)
+# Prepare the dedicated server
 
-Then open the data files of this world:
+Clone this repository in your home folder:
 
-![Open data](./docs/images/23_open_data.png)
+    cd ~ && git clone https://github.com/mathielo/dst-dedicated-server.git
 
-Navigate to **WOLRD_ID/Cluster_1/Master** and find **leveldataoverride.lua**, this file contain all configuration of your overworld, just open it, copy all content and past it on [docker-compose.yml](container/docker-compose.yml), just have shore to put it on field **LEVELDATA_OVERRIDES** relative to overworld.
+> :cop: Do **not** `sudo git clone` or your might run into permission issues :angel:
 
-![Setup overworld](./docs/images/24_copy_and_paste_overworld.png)
+See more info in [Managing the Server](./docs/ManagingTheServer.md).
 
-You have to do the same thing to underworld, so navigate to **WOLRD_ID/Cluster_1/Caves** and do the same process:
+## Generate `cluster_token.txt`
 
-![Setup underworld](./docs/images/25_copy_and_paste_underworld.png)
+:warning: The cluster token is stored in the `DSTClusterConfig/cluster_token.txt` file and without it **your server won't run**.
 
-With all done, you can jump to [Installing CLI and Building Server](#installing-cli-and-building-server) if you want a vanilla server.
+Check the [detailed instructions to generate a cluster token](./docs/ClusterToken.md). After you get it, make sure to **delete everything** from this file and leave only your cluster token there, without any spaces or anything else.
 
-## Adding mods
+You can easily do that replacing `InsertYourTokenHere` in the following command and executing it in your server:
 
-First you have to find your mod on the [Don't Starve Together workshop](https://steamcommunity.com/app/322330/workshop/), just open the link and choose a mod, in this case i will install **Simple Health Bar**. Put the mod name on the search box and once the mod appears just click it:
+    echo 'InsertYourTokenHere' > ~/dst-dedicated-server/DSTClusterConfig/cluster_token.txt
 
-![Search mod](./docs/images/09_search_mod.png)
+:closed_lock_with_key: The account that generates the token automatically gains admin access in-game, meaning you can rollback, regenerate the world or use console commands while playing.
 
-We will need the mod **id**, you can find it at URL of your browser
+:rainbow: Done! You are ready to start your server and play!
 
-![Find mod id](./docs/images/10_find_mod_id.png)
+# Manage the Server
 
-With the mod id copied open the file [modoverrides.lua](./container/modoverrides.lua) and paste it as follows:
+You should now have everything you **need** to start playing! See the full docs on how to [manage your server](./docs/ManagingTheServer.md) to learn how to **start**, **save** the game and **stop** the server.
 
-```lua
-return {
-	['workshop-MOD_ID_THAT_YOU_COPIED'] = { enabled=true },
-}
-```
+Keep on reading to learn how to :point_down: [customize the server](#customizing-the-server--world) :point_down: and [install mods](#managing-mods) to your liking!
 
-![Add mod](./docs/images/11_add_mod.png)
+---
 
-Open the file [docker-compose.yml](./container/docker-compose.yml) and put all mods that you have installed on the field `MODS`, you need to set this field to both **overworld** and **underworld** sections
+# Customize the Server and World
 
-![Add mod docker compose overworld](./docs/images/12_add_mod_docker_compose_overworld.png)
+The files listed below are the ones you'll likely be tweaking to customize your server and world to your likes.
 
-![Add mod docker compose underworld](./docs/images/13_add_mod_docker_compose_underworld.png)
-
-You can have as many mods you want.
-
-## Setting up a mod
-
-If you want to tweak some configuration on your mod, follow this simple guide:
-
-Open **DST** on **Steam** and click on button **workshop**
-![Open workshop on Steam](./docs/images/14_open_workshop_on_steam.png)
-
-Serach the mod that yout want to configure and open it
-![Search and open mod on Steam](./docs/images/15_search_and_open_mod_steam.png)
-
-Click on **Subscribe**
-![Subscribe to mod](./docs/images/16_subscribe_to_mod.png)
-
-Right click and then **Copy Page URL**
-![Copy page URL](./docs/images/17_copy_page_URL.png)
-
-Open any text editor and paste the URL and identify the mod id
-![Paste URL and get ID](./docs/images/18_paste_url_get_id.png)
-
-Now you will have to find this mod on your computer, normally they are installed on `STEAM_FOLDER/steamapps/common/Don't Starve Together/mods`, just open the folder with the ID that you identified on previous step
-![Find folder](./docs/images/19_find_folder.png)
-
-Open the file modinfo.lua
-![Open modinfo](./docs/images/20_open_modinfo.png)
-
-This file have all mod options, just search for what you want to modify and put your modifications on the file [modoverrides.lua](./container/modoverrides.lua)
-![Modinfo](./docs/images/21_modinfo.png)
-
-## Installing CLI and Building Server
-
-```bash
-$ sudo add-apt-repository ppa:deadsnakes/ppa -y
-$ sudo apt-get update -y
-$ sudo apt-get install python3.8 -y
-$ cd dst-server/src
-$ sudo python3.8 main.py --install
-$ exec bash
-```
-
-## Running Server
+> :rotating_light: Changing any files **other than the ones listed below** is only advised if you know what you're doing.
 
 ```
-$ dst --start
+DSTClusterConfig/
+  Caves/
+    leveldataoverride.lua
+  Master/
+    leveldataoverride.lua
+  mods/
+    dedicated_server_mods_setup.lua
+    modoverrides.lua
+  adminlist.txt
+  blocklist.txt
+  cluster.ini
+  whitelist.txt
 ```
 
-## CLI Options
+## The Server
 
-- **install**: installs all dependencias and configure the server
-- **start**: starts the container
-- **stop**: stops the container
-- **delete**: deletes the server (_tip: make a backup before using this option_)
-- **overworld**: opens a bash shell on overworld container
-- **underworld**: opens a bash shell on underworld container
-- **containers**: shows a list of all running containers
-- **images**: shows a list of all images installed
+* [DSTClusterConfig/cluster.ini](./DSTClusterConfig/cluster.ini)
+
+This file holds server attributes, such as `max_players`, `pause_when_empty`, `cluster_intention` - and [many others :link:](https://forums.kleientertainment.com/topic/64552-dedicated-server-settings-guide/).
+
+> :bulb: On your **first setup** it's important to change at least the [`cluster_name`](./DSTClusterConfig/cluster.ini#L27) and [`cluster_password`](./DSTClusterConfig/cluster.ini#L29) to be able to identify and join your sever from the game's server list.
+
+> :cop: Please handle with care. There are sections where `[ CHANGE THIS ]` denotes places you **should** change. There are also smaller secitions which **should not be touched** as it might compromise the communication between Master <-> Caves shards.
+
+By default the server will autosave once every game day (`autosaver_enabled = true`).
+
+## The World
+
+Determines the settings for world generation for each shard, respectively:
+
+* [DSTClusterConfig/Master/leveldataoverride.lua](./DSTClusterConfig/Master/leveldataoverride.lua)
+* [DSTClusterConfig/Caves/leveldataoverride.lua](./DSTClusterConfig/Caves/leveldataoverride.lua)
+
+You may tweak them as much as you like, granted that **the cave one** always have these defined:
+
+    id="DST_CAVE"
+    location="Cave"
+
+## Mods
+
+Check the [detailed instructions](./DSTClusterConfig/mods) on how to install, configure and enable mods. :alien:
+
+## Admins, Bans and Whitelists
+
+If you know what you're after, the `(admin|block|white)list.txt` files can be found within the [`DSTClusterConfig/`](./DSTClusterConfig) folder.
+
+You can find detailed information and a complete guide in the [Setting Admins, Bans and Whitelisted Players](./docs/AdminBanWhitelist.md) docs.
+
+---
+
+# Contributing
+
+Contributions and feedback are always welcome! Feel free to open an [issue](/../../issues) or a [pull request](/../../pulls) with improvements!
+
+# References
+
+* [How to setup dedicated server with cave on Linux](http://steamcommunity.com/sharedfiles/filedetails/?id=590565473)
+* [Dedicated Server Settings Guide](https://forums.kleientertainment.com/topic/64552-dedicated-server-settings-guide/)
+* [Dedicated Server Command Line Options Guide](https://forums.kleientertainment.com/topic/64743-dedicated-server-command-line-options-guide/)
+
+### Other links
+
+* [Thread in Klei forums](https://forums.kleientertainment.com/topic/84574-dedicated-server-setup-guide-on-any-platform-windowsmaclinux-with-docker/)
+* [Steam Guide](http://steamcommunity.com/sharedfiles/filedetails/?id=1206742951)
